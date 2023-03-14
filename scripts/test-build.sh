@@ -1,7 +1,7 @@
 #!/bin\bash
 set -e
 
-BASENAME="md2html"
+BASENAME="notion-update-header"
 
 # ビルドされたコードにテスト用のコードを結合する.
 # ビルドされたコードはエクスポートされていないための対応.

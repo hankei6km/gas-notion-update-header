@@ -119,8 +119,8 @@ dist
 
 .clasp.json
 .clasprc.json
-/md2html.zip
+/gas-notion-update-header.zip
 /tmp/
 /build/
-/test/build/md2html.spec.js
+/test/build/notion-update-header.spec.js
 /index.d.ts

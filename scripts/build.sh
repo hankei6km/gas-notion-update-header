@@ -1,8 +1,8 @@
 #!/bin/bash
 set -e
 
-NAMESPACE="MD2html"
-BASENAME="md2html"
+NAMESPACE="NotionUpdateHeader"
+BASENAME="notion-update-header"
 
 BUILD_DIR="build"
 # rollupjs でビルドされた結果(定義は "rollup.js" でされている).

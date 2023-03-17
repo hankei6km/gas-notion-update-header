@@ -1,8 +1,7 @@
 {
   "name": "clasp",
   "image": "ghcr.io/hankei6km/h6-dev-containers:clasp",
-  "runArgs": ["--init", "--privileged"],
-  "overrideCommand": false,
+  "runArgs": ["--privileged"],
 
   // Use 'forwardPorts' to make a list of ports inside the container available locally.
   // "forwardPorts": [],

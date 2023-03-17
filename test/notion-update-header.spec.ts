@@ -7,6 +7,7 @@ afterEach(() => {
 })
 
 describe('NotionUpdateHeader.update()', () => {
+  const unusedApiKey = 'dummy-apiKey'
   it('should call UrlFetchApp.fetch metod', () => {
     const mockfetch = jest.fn().mockReturnValue({
       getResponseCode: () => 200
@@ -15,7 +16,7 @@ describe('NotionUpdateHeader.update()', () => {
       fetch: mockfetch
     } as any
     NotionUpdateHeader.update({
-      apiKey: 'dummy-apiKey',
+      apiKey: unusedApiKey,
       id: 'dummy-id',
       kind: 'database'
     })
@@ -23,7 +24,7 @@ describe('NotionUpdateHeader.update()', () => {
       'https://api.notion.com/v1/databases/dummy-id',
       {
         headers: {
-          Authorization: 'Bearer dummy-apiKey',
+          Authorization: `Bearer ${unusedApiKey}`,
           'Content-Type': 'application/json',
           'Notion-Version': '2022-06-28'
         },
@@ -43,7 +44,7 @@ describe('NotionUpdateHeader.update()', () => {
     } as any
     expect(() =>
       NotionUpdateHeader.update({
-        apiKey: 'dummy-apiKey',
+        apiKey: unusedApiKey,
         id: 'dummy-id',
         kind: 'database'
       })
@@ -59,7 +60,7 @@ describe('NotionUpdateHeader.update()', () => {
     } as any
     expect(() =>
       NotionUpdateHeader.update({
-        apiKey: 'dummy-apiKey',
+        apiKey: unusedApiKey,
         id: 'dummy-id',
         kind: 'database'
       })

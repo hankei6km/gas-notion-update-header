@@ -7,7 +7,9 @@ afterEach(() => {
 })
 
 describe('NotionUpdateHeader.update()', () => {
-  const unused = 'dummy-apiKey'
+  // It trigger alerts from CodeQL(Hard-coded credentials).
+  // Dismiss alert manually in GitHub UI(Used in tests).
+  const unused = 'ununsed-apiKey'
   it('should call UrlFetchApp.fetch metod', () => {
     const mockfetch = jest.fn().mockReturnValue({
       getResponseCode: () => 200

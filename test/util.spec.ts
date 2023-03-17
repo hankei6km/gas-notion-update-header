@@ -67,6 +67,50 @@ describe('payload()', () => {
       type: 'external'
     })
   })
+  it('should transform string to icon', () => {
+    expect(
+      payload({
+        ...mockOptions('database'),
+        icon: '😀'
+      }).icon
+    ).toEqual({ emoji: '😀', type: 'emoji' })
+    expect(
+      payload({
+        ...mockOptions('page'),
+        icon: '😀'
+      }).icon
+    ).toEqual({ emoji: '😀', type: 'emoji' })
+  })
+  it('should pass-through icon', () => {
+    expect(
+      payload({
+        ...mockOptions('database'),
+        icon: {
+          type: 'external',
+          external: {
+            url: 'dummy-icon'
+          }
+        }
+      }).icon
+    ).toEqual({
+      external: { url: 'dummy-icon' },
+      type: 'external'
+    })
+    expect(
+      payload({
+        ...mockOptions('page'),
+        icon: {
+          type: 'external',
+          external: {
+            url: 'dummy-icon'
+          }
+        }
+      }).icon
+    ).toEqual({
+      external: { url: 'dummy-icon' },
+      type: 'external'
+    })
+  })
   it('should transform string to title', () => {
     expect(
       (

@@ -10,6 +10,10 @@ export namespace NotionUpdateHeader {
     | string
     | UpdateDatabaseParameters['cover']
     | UpdatePageParameters['cover']
+  type HeaderIcon =
+    | Extract<UpdateDatabaseParameters['icon'], { emoji: any }>['emoji'] // EmojiRequest
+    | UpdateDatabaseParameters['icon']
+    | UpdatePageParameters['icon']
   type HeaderTitle = string | UpdateDatabaseParameters['title'] // Array<RichTextItemRequest>
   /**
    * Options for update header.
@@ -19,6 +23,7 @@ export namespace NotionUpdateHeader {
    * @property {string} id - The id of page/datese.
    * @property {('page'|'database')} kind - The kind of object that the id points to.
    * @property {HeaderCover} cover - The image to set cover of the page/database.
+   * @property {HeaderIcon} icon - The emoji(or image) to set icon of the page/database.
    * @property {Title} title - The title to set cover of the page/database.
    */
   export type Options = {
@@ -26,6 +31,7 @@ export namespace NotionUpdateHeader {
     id: string
     kind: 'page' | 'database'
     cover?: HeaderCover
+    icon?: HeaderIcon
     title?: HeaderTitle
   }
 

@@ -7,6 +7,9 @@ afterEach(() => {
 })
 
 describe('NotionUpdateHeader.update()', () => {
+  /**
+   * unused
+   */
   const unusedApiKey = 'dummy-apiKey'
   it('should call UrlFetchApp.fetch metod', () => {
     const mockfetch = jest.fn().mockReturnValue({

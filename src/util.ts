@@ -28,6 +28,17 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
           }
         }
       : opts.cover
+
+  const icon: UpdateDatabaseParameters['icon'] | UpdatePageParameters['icon'] =
+    opts.icon === undefined
+      ? undefined
+      : typeof opts.icon === 'string'
+      ? {
+          emoji: opts.icon as any, // EmojiRequest に合致するかの検証は難しい(おそらく API でエラーになる)
+          type: 'emoji'
+        }
+      : opts.icon
+
   const title =
     opts.title === undefined
       ? undefined
@@ -35,13 +46,14 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
       ? [{ type: 'text' as const, text: { content: opts.title } }]
       : opts.title
 
+  const basic = { cover, icon }
   if (opts.kind === 'database') {
     return {
-      cover,
+      ...basic,
       title
     }
   }
-  const ret: Payload = { cover }
+  const ret: Payload = { ...basic }
   if (title) {
     ret.properties = {
       // title はプロパティを無視している、と思う。

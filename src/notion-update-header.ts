@@ -14,7 +14,7 @@ export namespace NotionUpdateHeader {
     | Extract<UpdateDatabaseParameters['icon'], { emoji: any }>['emoji'] // EmojiRequest
     | UpdateDatabaseParameters['icon']
     | UpdatePageParameters['icon']
-  type HeaderTitle = string | UpdateDatabaseParameters['title'] // Array<RichTextItemRequest>
+  type HeaderTitleDatabase = string | UpdateDatabaseParameters['title'] // Array<RichTextItemRequest>
   /**
    * Options for update header.
    *
@@ -32,7 +32,7 @@ export namespace NotionUpdateHeader {
     kind: 'page' | 'database'
     cover?: HeaderCover
     icon?: HeaderIcon
-    title?: HeaderTitle
+    titleDatabase?: HeaderTitleDatabase
   }
 
   /**

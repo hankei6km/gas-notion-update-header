@@ -39,26 +39,21 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
         }
       : opts.icon
 
-  const title =
-    opts.title === undefined
-      ? undefined
-      : typeof opts.title === 'string'
-      ? [{ type: 'text' as const, text: { content: opts.title } }]
-      : opts.title
-
   const basic = { cover, icon }
   if (opts.kind === 'database') {
+    const title =
+      opts.titleDatabase === undefined
+        ? undefined
+        : typeof opts.titleDatabase === 'string'
+        ? [{ type: 'text' as const, text: { content: opts.titleDatabase } }]
+        : opts.titleDatabase
     return {
       ...basic,
       title
     }
   }
+
   const ret: Payload = { ...basic }
-  if (title) {
-    ret.properties = {
-      // title はプロパティを無視している、と思う。
-      Title: { title: title, type: 'title' as const }
-    }
-  }
+  // TODO: titlePage 用処理
   return ret
 }

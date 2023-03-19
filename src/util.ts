@@ -42,37 +42,43 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
   const basic = { cover, icon }
   if (opts.kind === 'database') {
     const title =
-      opts.titleDatabase === undefined
+      opts.title === undefined
         ? undefined
-        : typeof opts.titleDatabase === 'string'
-        ? [{ type: 'text' as const, text: { content: opts.titleDatabase } }]
-        : opts.titleDatabase
+        : typeof opts.title === 'string'
+        ? [{ type: 'text' as const, text: { content: opts.title } }]
+        : Array.isArray(opts.title)
+        ? opts.title
+        : undefined
     return {
       ...basic,
       title
     }
   }
 
-  type TitleValue = Exclude<
-    Extract<NotionUpdateHeader.Options['titlePage'], { title: any }>['title'],
-    string
-  >
   const title =
-    opts.titlePage === undefined
+    opts.title === undefined
       ? undefined
-      : typeof opts.titlePage === 'string'
+      : typeof opts.title === 'string'
       ? {
           title: {
-            title: [
-              { type: 'text' as const, text: { content: opts.titlePage } }
-            ],
+            title: [{ type: 'text' as const, text: { content: opts.title } }],
             type: 'title' as const
           }
         }
-      : typeof opts.titlePage.title === 'string' &&
-        typeof opts.titlePage.name === 'string'
+      : Array.isArray(opts.title)
+      ? {
+          title: {
+            title: opts.title,
+            type: 'title' as const
+          }
+        }
+      : typeof opts.title.title === 'string' &&
+        typeof opts.title.name === 'string'
       ? ((title: string, name: string) => {
-          const ret: Record<string, { title: TitleValue; type: 'title' }> = {}
+          const ret: Record<
+            string,
+            { title: NotionUpdateHeader.TitleRichText; type: 'title' }
+          > = {}
           ret[name] = {
             title: [
               {
@@ -83,14 +89,17 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
             type: 'title'
           }
           return ret
-        })(opts.titlePage.title, opts.titlePage.name)
-      : typeof opts.titlePage.title !== 'string' &&
-        typeof opts.titlePage.name === 'string'
-      ? ((title: TitleValue, name: string) => {
-          const ret: Record<string, { title: TitleValue; type: 'title' }> = {}
+        })(opts.title.title, opts.title.name)
+      : typeof opts.title.title !== 'string' &&
+        typeof opts.title.name === 'string'
+      ? ((title: NotionUpdateHeader.TitleRichText, name: string) => {
+          const ret: Record<
+            string,
+            { title: NotionUpdateHeader.TitleRichText; type: 'title' }
+          > = {}
           ret[name] = { title, type: 'title' }
           return ret
-        })(opts.titlePage.title, opts.titlePage.name)
+        })(opts.title.title, opts.title.name)
       : (undefined as any)
   const ret: Payload = { ...basic, properties: title }
   return ret

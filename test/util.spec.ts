@@ -116,7 +116,7 @@ describe('payload()', () => {
       (
         payload({
           ...mockOptions('database'),
-          titleDatabase: 'dummy'
+          title: 'dummy'
         }) as any
       ).title
     ).toEqual([{ text: { content: 'dummy' }, type: 'text' }])
@@ -126,17 +126,27 @@ describe('payload()', () => {
       (
         payload({
           ...mockOptions('database'),
-          titleDatabase: [{ text: { content: 'dummy-title' }, type: 'text' }]
+          title: [{ text: { content: 'dummy-title' }, type: 'text' }]
         }) as any
       ).title
     ).toEqual([{ text: { content: 'dummy-title' }, type: 'text' }])
+  })
+  it('should return undefined when pass unsupported object(database)', () => {
+    expect(
+      (
+        payload({
+          ...mockOptions('database'),
+          title: { title: 'dummy', name: 'dummy-title' }
+        }) as any
+      ).title
+    ).toBeUndefined()
   })
   it('should transform string to title(page)', () => {
     expect(
       (
         payload({
           ...mockOptions('page'),
-          titlePage: 'dummy'
+          title: 'dummy'
         }) as any
       ).properties
     ).toEqual({
@@ -149,7 +159,7 @@ describe('payload()', () => {
       (
         payload({
           ...mockOptions('page'),
-          titlePage: { title: 'dummy', name: 'DummyTitle' }
+          title: { title: 'dummy', name: 'DummyTitle' }
         }) as any
       ).properties
     ).toEqual({
@@ -164,7 +174,20 @@ describe('payload()', () => {
       (
         payload({
           ...mockOptions('page'),
-          titlePage: {
+          title: [{ text: { content: 'dummy-title' }, type: 'text' }]
+        }) as any
+      ).properties
+    ).toEqual({
+      title: {
+        title: [{ text: { content: 'dummy-title' }, type: 'text' }],
+        type: 'title'
+      }
+    })
+    expect(
+      (
+        payload({
+          ...mockOptions('page'),
+          title: {
             title: [{ text: { content: 'dummy-title' }, type: 'text' }],
             name: 'DummyTitle'
           }

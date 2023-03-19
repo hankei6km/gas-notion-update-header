@@ -53,7 +53,45 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
     }
   }
 
-  const ret: Payload = { ...basic }
-  // TODO: titlePage 用処理
+  type TitleValue = Exclude<
+    Extract<NotionUpdateHeader.Options['titlePage'], { title: any }>['title'],
+    string
+  >
+  const title =
+    opts.titlePage === undefined
+      ? undefined
+      : typeof opts.titlePage === 'string'
+      ? {
+          title: {
+            title: [
+              { type: 'text' as const, text: { content: opts.titlePage } }
+            ],
+            type: 'title' as const
+          }
+        }
+      : typeof opts.titlePage.title === 'string' &&
+        typeof opts.titlePage.name === 'string'
+      ? ((title: string, name: string) => {
+          const ret: Record<string, { title: TitleValue; type: 'title' }> = {}
+          ret[name] = {
+            title: [
+              {
+                type: 'text' as const,
+                text: { content: title }
+              }
+            ],
+            type: 'title'
+          }
+          return ret
+        })(opts.titlePage.title, opts.titlePage.name)
+      : typeof opts.titlePage.title !== 'string' &&
+        typeof opts.titlePage.name === 'string'
+      ? ((title: TitleValue, name: string) => {
+          const ret: Record<string, { title: TitleValue; type: 'title' }> = {}
+          ret[name] = { title, type: 'title' }
+          return ret
+        })(opts.titlePage.title, opts.titlePage.name)
+      : (undefined as any)
+  const ret: Payload = { ...basic, properties: title }
   return ret
 }

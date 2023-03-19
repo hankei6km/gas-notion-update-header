@@ -111,46 +111,70 @@ describe('payload()', () => {
       type: 'external'
     })
   })
-  it('should transform string to title', () => {
+  it('should transform string to title(database)', () => {
     expect(
       (
         payload({
           ...mockOptions('database'),
-          title: 'dummy'
+          titleDatabase: 'dummy'
         }) as any
       ).title
     ).toEqual([{ text: { content: 'dummy' }, type: 'text' }])
-    expect(
-      (
-        payload({
-          ...mockOptions('page'),
-          title: 'dummy'
-        }) as any
-      ).properties.Title
-    ).toEqual({
-      title: [{ text: { content: 'dummy' }, type: 'text' }],
-      type: 'title'
-    })
   })
-  it('should pass-through title', () => {
+  it('should pass-through title(database)', () => {
     expect(
       (
         payload({
           ...mockOptions('database'),
-          title: [{ text: { content: 'dummy-title' }, type: 'text' }]
+          titleDatabase: [{ text: { content: 'dummy-title' }, type: 'text' }]
         }) as any
       ).title
     ).toEqual([{ text: { content: 'dummy-title' }, type: 'text' }])
+  })
+  it('should transform string to title(page)', () => {
     expect(
       (
         payload({
           ...mockOptions('page'),
-          title: [{ text: { content: 'dummy-title' }, type: 'text' }]
+          titlePage: 'dummy'
         }) as any
-      ).properties.Title
+      ).properties
     ).toEqual({
-      title: [{ text: { content: 'dummy-title' }, type: 'text' }],
-      type: 'title'
+      title: {
+        title: [{ text: { content: 'dummy' }, type: 'text' }],
+        type: 'title'
+      }
+    })
+    expect(
+      (
+        payload({
+          ...mockOptions('page'),
+          titlePage: { title: 'dummy', name: 'DummyTitle' }
+        }) as any
+      ).properties
+    ).toEqual({
+      DummyTitle: {
+        title: [{ text: { content: 'dummy' }, type: 'text' }],
+        type: 'title'
+      }
+    })
+  })
+  it('should pass-through title(page)', () => {
+    expect(
+      (
+        payload({
+          ...mockOptions('page'),
+          titlePage: {
+            title: [{ text: { content: 'dummy-title' }, type: 'text' }],
+            name: 'DummyTitle'
+          }
+        }) as any
+      ).properties
+    ).toEqual({
+      DummyTitle: {
+        title: [{ text: { content: 'dummy-title' }, type: 'text' }],
+        type: 'title'
+      }
     })
   })
 })

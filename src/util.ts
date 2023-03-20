@@ -49,8 +49,17 @@ export function payload(opts: NotionUpdateHeader.Options): Payload {
         : Array.isArray(opts.title)
         ? opts.title
         : undefined
+    const description =
+      opts.description === undefined
+        ? undefined
+        : typeof opts.description === 'string'
+        ? [{ type: 'text' as const, text: { content: opts.description } }]
+        : Array.isArray(opts.description)
+        ? opts.description
+        : undefined
     return {
       ...basic,
+      description,
       title
     }
   }

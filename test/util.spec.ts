@@ -121,6 +121,28 @@ describe('payload()', () => {
       ).title
     ).toEqual([{ text: { content: 'dummy' }, type: 'text' }])
   })
+  it('should pass-through description(database)', () => {
+    expect(
+      (
+        payload({
+          ...mockOptions('database'),
+          description: [
+            { text: { content: 'dummy-description' }, type: 'text' }
+          ]
+        }) as any
+      ).description
+    ).toEqual([{ text: { content: 'dummy-description' }, type: 'text' }])
+  })
+  it('should transform string to description(database)', () => {
+    expect(
+      (
+        payload({
+          ...mockOptions('database'),
+          description: 'dummy'
+        }) as any
+      ).description
+    ).toEqual([{ text: { content: 'dummy' }, type: 'text' }])
+  })
   it('should pass-through title(database)', () => {
     expect(
       (

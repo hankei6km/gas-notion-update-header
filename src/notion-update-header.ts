@@ -7,6 +7,7 @@ import { payload, endpoint } from './util.js'
 
 export namespace NotionUpdateHeader {
   export type TitleRichText = UpdateDatabaseParameters['title'] // Array<RichTextItemRequest>(UpdatePageParameters から取り出すのは難しい)
+  export type DescriptionRichText = UpdateDatabaseParameters['description'] // Array<RichTextItemRequest>
   type HeaderCover =
     | string
     | UpdateDatabaseParameters['cover']
@@ -15,6 +16,7 @@ export namespace NotionUpdateHeader {
     | Extract<UpdateDatabaseParameters['icon'], { emoji: any }>['emoji'] // EmojiRequest
     | UpdateDatabaseParameters['icon']
     | UpdatePageParameters['icon']
+  type HeaderDescription = string | TitleRichText
   type HeaderTitle =
     | string
     | TitleRichText
@@ -32,6 +34,7 @@ export namespace NotionUpdateHeader {
    * @property {('page'|'database')} kind - The kind of object that the id points to.
    * @property {HeaderCover} cover - The image to set cover of the page/database.
    * @property {HeaderIcon} icon - The emoji(or image) to set icon of the page/database.
+   * @property {HeaderDescription} description - The description to set cover of the database.
    * @property {HeaderTitle} title - The title to set cover of the page/database.
    */
   export type Options = {
@@ -40,6 +43,7 @@ export namespace NotionUpdateHeader {
     kind: 'page' | 'database'
     cover?: HeaderCover
     icon?: HeaderIcon
+    description?: HeaderDescription
     title?: HeaderTitle
   }
 

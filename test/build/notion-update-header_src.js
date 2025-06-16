@@ -18,6 +18,6 @@ describe('update()', () => {
       id: 'dummy-id',
       kind: 'database'
     })
-    expect(mockfetch).toBeCalledTimes(1)
+    expect(mockfetch).toHaveBeenCalledTimes(1)
   })
 })

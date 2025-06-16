@@ -22,7 +22,7 @@ describe('NotionUpdateHeader.update()', () => {
       id: 'dummy-id',
       kind: 'database'
     })
-    expect(mockfetch).toBeCalledWith(
+    expect(mockfetch).toHaveBeenCalledWith(
       'https://api.notion.com/v1/databases/dummy-id',
       {
         headers: {
@@ -50,7 +50,7 @@ describe('NotionUpdateHeader.update()', () => {
         id: 'dummy-id',
         kind: 'database'
       })
-    ).toThrowError(/code: 400, message: dummy error/)
+    ).toThrow(/code: 400, message: dummy error/)
   })
   it('should throw error by code(500)', () => {
     const mockfetch = jest.fn().mockReturnValue({
@@ -66,6 +66,6 @@ describe('NotionUpdateHeader.update()', () => {
         id: 'dummy-id',
         kind: 'database'
       })
-    ).toThrowError(/code: 500, message: dummy error/)
+    ).toThrow(/code: 500, message: dummy error/)
   })
 })

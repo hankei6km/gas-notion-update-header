@@ -1,9 +1,9 @@
 import { jest } from '@jest/globals'
 import { NotionUpdateHeader } from '../src/notion-update-header.js'
 
-const saveUrlFetchApp = global.UrlFetchApp
+const saveUrlFetchApp = globalThis.UrlFetchApp
 afterEach(() => {
-  global.UrlFetchApp = saveUrlFetchApp
+  globalThis.UrlFetchApp = saveUrlFetchApp
 })
 
 describe('NotionUpdateHeader.update()', () => {
@@ -14,7 +14,7 @@ describe('NotionUpdateHeader.update()', () => {
     const mockfetch = jest.fn().mockReturnValue({
       getResponseCode: () => 200
     })
-    global.UrlFetchApp = {
+    globalThis.UrlFetchApp = {
       fetch: mockfetch
     } as any
     NotionUpdateHeader.update({
@@ -41,7 +41,7 @@ describe('NotionUpdateHeader.update()', () => {
       getResponseCode: () => 400,
       getContentText: () => 'dummy error'
     })
-    global.UrlFetchApp = {
+    globalThis.UrlFetchApp = {
       fetch: mockfetch
     } as any
     expect(() =>
@@ -57,7 +57,7 @@ describe('NotionUpdateHeader.update()', () => {
       getResponseCode: () => 500,
       getContentText: () => 'dummy error'
     })
-    global.UrlFetchApp = {
+    globalThis.UrlFetchApp = {
       fetch: mockfetch
     } as any
     expect(() =>
